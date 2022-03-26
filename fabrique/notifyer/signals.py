@@ -14,10 +14,8 @@ def notify(sender, instance, created, **kwargs):
         finish = instance.finish_date
 
         if start <= current_time and finish > current_time:
-            print(1)
             filter_mailing.delay(instance.id, True)
         else:
-            print(2)
             filter_mailing.apply_async((instance.id, True), eta=start)
 
     else:

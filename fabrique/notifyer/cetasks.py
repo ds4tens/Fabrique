@@ -1,3 +1,4 @@
+from fabrique.settings import SENDER_URL, TOKEN
 from fabrique.celery import app
 from notifyer import models
 import requests 
@@ -22,27 +23,27 @@ def filter_mailing(mailing_pk, flag = False):
             client_queryset = models.Client.objects.filter(tag=tag)
 
         for client in client_queryset:
-            sender(client.id, mailing.id)
+            sender.delay(client.id, mailing.id)
 
         if client_queryset is None:
-            print('Непонятная жижа')
+            return 'filter_mailing каким-то чудом неверные данные в БД'
     return ('filter_mailing', True)
 
 @app.task
 def sender(client_id, mailing_id):
     headers = {
-        'Authorization': 'Bearer {}',
+        'Authorization': f'Bearer {TOKEN}',
         'Content-Type': 'application/json'
     }
     client = models.Client.objects.get(pk=client_id)
     mailing = models.MailingModel.objects.get(pk=mailing_id)
-    url = ... # Взять из настроек
     message = models.Message(
         mailing_id=mailing,
         client_id=client,
         status = False
     )
     message.save()
+    url = SENDER_URL+f'{message.id}'
     data = {
         'id': message.id,
         'phone': client.phone_number,
