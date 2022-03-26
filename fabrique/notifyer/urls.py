@@ -7,7 +7,6 @@ router.register(r'mailing', views.MailingViewSet, basename='mailingmodel')
 router.register(r'client', views.ClientViewSet, basename='client')
 
 urlpatterns = [
-    path('client/', views.ClientApiView.as_view(), name='client'),
     path('message/group/', views.MessageToMailingStatView.as_view(), name='message_to_mailing'),
     path('message/stats/', views.MessageStatView.as_view(), name='message_stat'),
     path('message/list/', views.MessageAllView.as_view(), name='message_all'),
