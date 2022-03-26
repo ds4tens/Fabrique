@@ -5,8 +5,10 @@ from notifyer import serializers
 
 # Create your views here.
 
-class ClientApiView(generics.ListCreateAPIView):
-    # TODO переделать под сет
+class ClientViewSet(mixins.CreateModelMixin, mixins.DestroyModelMixin,
+                    mixins.ListModelMixin, mixins.UpdateModelMixin,
+                    viewsets.GenericViewSet):
+
     queryset = models.Client.objects.all()
     serializer_class = serializers.ClientSerializer
 

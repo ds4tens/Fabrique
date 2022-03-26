@@ -4,7 +4,7 @@ from rest_framework.test import APIClient
 
 # Create your tests here.
 
-class PostTest(TestCase):
+class ClientTest(TestCase):
     url = reverse('client')
     sender = APIClient()
 
@@ -41,3 +41,4 @@ class PostTest(TestCase):
         request = self.sender.post(self.url, data, format='json')
         
         assert request.status_code == 400
+        

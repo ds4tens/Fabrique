@@ -4,6 +4,7 @@ from notifyer import views
 
 router = DefaultRouter()
 router.register(r'mailing', views.MailingViewSet, basename='mailingmodel')
+router.register(r'client', views.ClientViewSet, basename='client')
 
 urlpatterns = [
     path('client/', views.ClientApiView.as_view(), name='client'),
