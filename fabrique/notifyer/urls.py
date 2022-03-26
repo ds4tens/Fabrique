@@ -1,6 +1,6 @@
 from django.urls import  path
 from notifyer import views
-from rest_framework import routers
 
 urlpatterns = [
+    path('client/', views.ClientApiView.as_view(), name='client'),
 ]
