@@ -1,6 +1,9 @@
 from fabrique.settings import SENDER_URL, TOKEN
 from fabrique.celery import app
+
+from django.utils import timezone
 from notifyer import models
+
 import requests 
 from requests import exceptions
 from time import sleep
@@ -68,7 +71,16 @@ def sender(client_id, mailing_id):
         message.status = True
         message.save()
         return ('sender', response.status_code)
+    else:
+        time = (mailing.finish_date - mailing.start_date)/4
+        check_time.apply_async((mailing_id, True), eta=time)
     return ('sender', response.status_code)
 
 
-
+@app.task
+def check_time(mailing_id):
+    mailing = models.MailingModel.objects.get(pk=mailing_id)
+    if mailing.finish_date < timezone.now():
+        filter_mailing.delay(filter_mailing, True)
+    else:
+        return (False, f'check_time {mailing_id} time has passed')
