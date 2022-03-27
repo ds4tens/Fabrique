@@ -11,7 +11,5 @@ COPY . /code/
 
 EXPOSE 8000
 
-COPY ./entrypoint.sh /code/entrypoint.sh
-
-ENTRYPOINT ["/code/entrypoint.sh"]
-
+RUN python3 manage.py makemigrations notifyer
+RUN python3 manage.py migrate notifyer
