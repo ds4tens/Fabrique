@@ -11,7 +11,7 @@ services:
     build: ./fabrique
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - ./fabrique/:/code
     environment:
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis
@@ -21,7 +21,7 @@ services:
     build: ./fabrique
     command: celery -A fabrique worker -l info
     volumes:
-      - .:/code
+      - ./fabrique/:/code
     depends_on:
       - redis
       - web
@@ -29,11 +29,10 @@ services:
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis
   flower:
-    build: ./fabrique
+    build: /fabrique
     command: celery -A fabrique flower
     volumes:
-      - .:/data
-    working_dir: /data
+      - ./fabrique/:/code
     ports:
       - 5555:5555
     environment:
