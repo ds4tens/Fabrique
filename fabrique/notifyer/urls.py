@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from notifyer import views
 
 router = DefaultRouter()
-router.register(r'mailing', views.MailingViewSet, basename='mailingmodel')
+router.register(r'mailing', views.MailingViewSet, basename='mailing')
 router.register(r'client', views.ClientViewSet, basename='client')
 
 urlpatterns = [
