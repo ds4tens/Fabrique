@@ -36,7 +36,7 @@ Django 4.0.3, DRF, Celery, Flower
 
 # Для запуска контейнера docker так же нужны параметры
 
-`docker-compose -up d`
+`docker-compose up`
 
 # Документация OpenAPI
 

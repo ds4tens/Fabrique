@@ -8,8 +8,8 @@ services:
     ports:
       - 6379:6379
   web:
-    build: ./fabrique
-    command: python3 manage.py runserver 0.0.0.0:8000
+    build: fabrique/
+    command: bash -c "python manage.py makemigrations notifyer && python manage.py migrate notifyer && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./fabrique/:/code
     environment:
@@ -18,7 +18,7 @@ services:
     ports:
       - 8000:8000
   celery:
-    build: ./fabrique
+    build: fabrique/
     command: celery -A fabrique worker -l info
     volumes:
       - ./fabrique/:/code
@@ -29,7 +29,7 @@ services:
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis
   flower:
-    build: /fabrique
+    build: fabrique/
     command: celery -A fabrique flower
     volumes:
       - ./fabrique/:/code

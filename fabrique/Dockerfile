@@ -10,6 +10,3 @@ RUN pip install -r requirements.txt
 COPY . /code/
 
 EXPOSE 8000
-
-RUN python3 manage.py makemigrations notifyer
-RUN python3 manage.py migrate notifyer
